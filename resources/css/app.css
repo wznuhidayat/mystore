@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+
+    li a{
+      position:relative;
+      text-decoration: none;
+      height: 2px;
+      
+    }
+     li a:after{
+      content: "";
+      position:absolute;
+      background-color: #fff;
+      height: 2px;
+      width: 0;
+      left: 0;
+      bottom: 1px;
+      transition: 0.3s;
+    }
+    li a:hover:after{
+      
+      width: 100%;
+      
+    }
+    .owl-nav .owl-prev{
+        position: absolute;
+        top: 150px;
+        left: 70px;
+    }
+    .owl-nav .owl-next{
+        position: absolute;
+        top: 150px;
+        right: 70px;
+    }
+    .owl-nav .owl-prev:hover{
+        background: none !important;
+    }
+    .owl-nav .owl-next:hover{
+        background: none !important;
+    }
+    .owl-theme .owl-dots {
+        position: relative;
+        top: -40px;
+    }
+    .owl-theme .owl-dots button{
+      height: 2px;
+      width: 20px;
+    }
+    .owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span {
+      background: #28AFB0 !important;
+    }
+    @media (max-width: 640px){
+      .owl-nav .owl-prev{
+        position: absolute;
+        top: 150px;
+        left: 10px;
+      }
+      .owl-nav .owl-next{
+          position: absolute;
+          top: 150px;
+          right: 10px;
+      }
+    }
+    @media (max-width: 768px) { 
+      .owl-nav .owl-prev{
+        position: absolute;
+        top: 150px;
+        left: 20px;
+      }
+      .owl-nav .owl-next{
+          position: absolute;
+          top: 150px;
+          right: 20px;
+      }
+    }
+    
+    /* .owl-nav .owl-prev > ion-icon{
+      color: #fff;
+    } */
+@tailwind utilities;
+
+
