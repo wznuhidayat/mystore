@@ -4,7 +4,6 @@
     li a{
       position:relative;
       text-decoration: none;
-      height: 2px;
       
     }
      li a:after{

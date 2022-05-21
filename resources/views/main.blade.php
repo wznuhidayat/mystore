@@ -20,8 +20,8 @@
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </head>
 
-<body class="font-poppins">
-    <div id="app">
+<body class="font-poppins bg-white">
+    <div id="app" class="">
         
         <router-view></router-view>
         <section >

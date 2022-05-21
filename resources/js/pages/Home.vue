@@ -1,3 +1,5 @@
+<style>
+</style>
 <template>
   <section>
     <navbar-component image="no-image.png"></navbar-component>
@@ -26,7 +28,7 @@
                   rounded-lg
                   px-4
                   py-1
-                  hover:bg-sec-primary
+                  hover:bg-sec-primary ease-in-out duration-300
                 "
               >
                 View
@@ -57,7 +59,7 @@
                   rounded-lg
                   px-4
                   py-1
-                  hover:bg-sec-primary
+                  hover:bg-sec-primary ease-in-out duration-300
                 "
               >
                 View
@@ -87,7 +89,7 @@
                   rounded-lg
                   px-4
                   py-1
-                  hover:bg-sec-primary
+                  hover:bg-sec-primary ease-in-out duration-300
                 "
               >
                 View
@@ -118,7 +120,7 @@
                   rounded-lg
                   px-4
                   py-1
-                  hover:bg-sec-primary
+                  hover:bg-sec-primary ease-in-out duration-300
                 "
               >
                 View
@@ -142,14 +144,11 @@
             h-18
             md:h-36
             items-center
-            hover:border hover:rounded-xl hover:shadow-md
+            hover:border hover:rounded-lg hover:shadow-md
+            ease-in-out duration-300
           "
         >
-          <img
-            :src="'css/icon/shirts.png'"
-            alt=""
-            class="w-12 md:w-20"
-          />
+          <img :src="'css/icon/shirts.png'" alt="" class="w-12 md:w-20" />
           <h3 class="text-xs text-center md:text-md mt-2 md:mt-3">
             Men’s Clothing
           </h3>
@@ -163,14 +162,11 @@
             h-18
             md:h-36
             items-center
-            hover:border hover:rounded-xl hover:shadow-md
+            hover:border hover:rounded-lg hover:shadow-md
+            ease-in-out duration-300
           "
         >
-          <img
-            :src="'css/icon/dress.png'"
-            alt=""
-            class="w-12 md:w-20"
-          />
+          <img :src="'css/icon/dress.png'" alt="" class="w-12 md:w-20" />
           <h3 class="text-xs text-center md:text-md mt-2 md:mt-3">
             Women Clothing
           </h3>
@@ -184,14 +180,11 @@
             h-18
             md:h-36
             items-center
-            hover:border hover:rounded-xl hover:shadow-md
+            hover:border hover:rounded-lg hover:shadow-md
+            ease-in-out duration-300
           "
         >
-          <img
-            :src="'css/icon/rings.png'"
-            alt=""
-            class="w-12 md:w-20"
-          />
+          <img :src="'css/icon/rings.png'" alt="" class="w-12 md:w-20" />
           <h3 class="text-xs text-center md:text-md mt-2 md:mt-3">Jewelery</h3>
         </div>
         <div
@@ -203,7 +196,8 @@
             h-18
             md:h-36
             items-center
-            hover:border hover:rounded-xl hover:shadow-md
+            hover:border hover:rounded-lg hover:shadow-md
+            ease-in-out duration-300
           "
         >
           <img
@@ -224,7 +218,8 @@
             h-18
             md:h-36
             items-center
-            hover:border hover:rounded-xl hover:shadow-md
+            hover:border hover:rounded-lg hover:shadow-md
+            ease-in-out duration-300
           "
         >
           <img
@@ -245,7 +240,8 @@
             h-18
             md:h-36
             items-center
-            hover:border hover:rounded-xl hover:shadow-md
+            hover:border hover:rounded-lg hover:shadow-md
+            ease-in-out duration-300
           "
         >
           <img
@@ -259,16 +255,34 @@
         </div>
       </div>
     </div>
-     <div class="container px-8 mx-auto mt-4">
-                <div class="head-product mb-4">
-                    <h2 class="text-lg font-bold">Product</h2>
-                </div>
-                <div class="flex flex-wrap gap-5 mx-auto">
-                    <div class="rounded-xl overflow-hidden shadow-md w-5/12 md:w-3/12 lg:w-2/12 border group hover:-translate-y-2 transition duration-300"  v-for="product in products">
-                        <card-product :product="product" ></card-product>
-                    </div>
-                </div>
-            </div>
+    <div class="container px-8 mx-auto mt-4">
+      <div class="head-product mb-4">
+        <h2 class="text-lg font-bold">Product</h2>
+      </div>
+      <div class="flex flex-wrap gap-5 mx-auto">
+        <div
+          class="
+            rounded-lg
+            overflow-hidden
+            shadow-md
+            w-5/12
+            md:w-3/12
+            lg:w-2/12
+            border
+            group
+            hover:-translate-y-2
+            transition
+            duration-300
+          "
+          v-if="index < products.length" v-for="(productIndex, index) in productsShow"
+        >
+          <card-product :product="products[index]"></card-product>
+        </div>
+      </div>
+      <div class="load-more flex justify-center mt-4 " v-if="productsShow < products.length || products.length > productsShow">
+        <button class="py-2 px-4 rounded-lg border shadow-sm hover:bg-sec-primary ease-in-out duration-300" @click="productsShow += 5">Load more <ion-icon name="caret-down-circle-outline" class="align-middle"></ion-icon></button>
+      </div>
+    </div>
   </section>
 </template>
 <script>
@@ -276,11 +290,13 @@ import NavbarComponent from "../components/NavbarComponent.vue";
 import CardProduct from "../components/CardProduct.vue";
 import axios from "axios";
 export default {
-  name: 'Home',
+  name: "Home",
   data() {
     return {
-      products: []
-    }
+      products: [],
+      productsShow: 10,
+      totalProducts: 0
+    };
   },
   components: {
     "navbar-component": NavbarComponent,
@@ -289,16 +305,34 @@ export default {
   methods: {
     setProduct(data) {
       this.products = data;
-    }
+    },
   },
   mounted() {
-    axios.get('http://localhost:3000/product')
+    axios
+      .get("http://localhost:3000/product")
       .then((response) => {
-        this.setProduct(response.data)
+        this.setProduct(response.data);
+        this.totalProducts = response.data.length;
       })
       .catch(function (error) {
         console.log(error);
       });
-  }
+
+    var owl = $(".owl-carousel");
+    owl.owlCarousel({
+      items: 1,
+      loop: true,
+      nav: true,
+      autoplay: true,
+      autoplayTimeout: 3000,
+      autoplayHoverPause: true,
+      navText: [
+        "<ion-icon name='chevron-back-outline' class='text-grey-main hover:text-sec-primary' size='large'></ion-icon>",
+        "<ion-icon name='chevron-forward-outline' class='text-grey-main hover:text-sec-primary' size='large'></ion-icon>",
+      ],
+      // navText:["<div class='nav-btn prev-slide'></div>","<div class='nav-btn next-slide'></div>"],
+    });
+    $(".owl-nav").addClass("container mx-auto");
+  },
 };
 </script>

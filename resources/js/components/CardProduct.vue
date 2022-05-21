@@ -18,24 +18,24 @@
         "
       >
         <div class="hidden group-hover:flex justify-end w-full gap-2 pr-3">
-          <button>
+          <router-link :to="'/products/'+product.id">
             <ion-icon
               name="eye-outline"
-              class="text-grey-main"
+              class="text-grey-main hover:text-sec-primary"
               size="large"
-            ></ion-icon>
-          </button>
+             ></ion-icon>
+          </router-link>
           <button>
             <ion-icon
               name="heart-outline"
-              class="text-grey-main"
+              class="text-grey-main hover:text-sec-primary"
               size="large"
             ></ion-icon>
           </button>
           <button>
             <ion-icon
               name="cart-outline"
-              class="text-grey-main"
+              class="text-grey-main hover:text-sec-primary"
               size="large"
             ></ion-icon>
           </button>

@@ -3,14 +3,22 @@
     <div class="h-full flex flex-col justify-center px-8 container">
       <div class="flex justify-between mb-8">
         <div class="text-grey-main text-2xl font-bold">My Store</div>
-        <div class="text-grey-main text-md">
-          <h3 class="hidden lg:inline-block">Wisnu</h3>
+        <div class="text-grey-main text-md hover:bg-cyan-800 px-2 dropdown inline-block relative group ">
+          <div>
+            <h3 class="hidden lg:inline-block">Wisnu</h3>
 
-          <img
-            :src="'../../../images/'+image"
-            alt=""
-            class="ml-2 w-8 rounded-full inline"
-          />
+            <img
+              :src="'../../../images/'+image"
+              alt=""
+              class="ml-2 w-8 rounded-full inline"
+            />
+          </div>
+          <ul class="transition ease-in-out duration-300 absolute hidden group-hover:block text-gray-700 pt-2 right-2 w-36 z-10">
+            <li class="py-2 px-4 rounded-t bg-gray-100 hover:bg-gray-200 block"><ion-icon name="person-outline" class="align-middle mr-3"></ion-icon><a class="static" href="#">Profile</a></li>
+            <li class="py-2 px-4 rounded-t bg-gray-100 hover:bg-gray-200 block"><ion-icon name="cart-outline" class="align-middle mr-3"></ion-icon><a class="static" href="#">Cart</a></li>
+            <li class="py-2 px-4 rounded-t bg-gray-100 hover:bg-gray-200 block"><ion-icon name="heart-outline" class="align-middle mr-3"></ion-icon><a class="static" href="#">Wishlist</a></li>
+            <li class="py-2 px-4 rounded-t bg-gray-100 hover:bg-gray-200 block"><ion-icon name="log-out-outline" class="align-middle mr-3"></ion-icon><a class="static" href="#">Logout</a></li>
+          </ul>
         </div>
       </div>
       <div class="flex justify-between">
@@ -38,7 +46,7 @@
                 block
                 w-60
                 h-8
-                rounded-2xl
+                rounded-lg
                 border-gray-300
                 shadow-sm
                 focus:border-indigo-300

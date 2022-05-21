@@ -16,6 +16,10 @@ module.exports = {
         'sec-primary' : '#28AFB0',
         'grey-main' : '#DDCECD'
       },
+      spacing: {
+        '106': '28rem',
+        '128': '32rem',
+      }
     },
   },
   plugins: [

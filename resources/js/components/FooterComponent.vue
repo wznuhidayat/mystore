@@ -4,18 +4,18 @@
       <h1 class="text-grey-main text-2xl text-center font-bold mb-3">My Store</h1>
       <div class="mb-3">
         <ul class="flex justify-center gap-10">
-          <li class="block text-md text-grey-main group">
-            <a href="" class="py-2 group-hover:text-white">Home</a>
-          </li>
-          <li class="block text-md text-grey-main group">
-            <a href="" class="py-2 group-hover:text-white">Product</a>
-          </li>
-          <li class="block text-md text-grey-main group">
-            <a href="" class="py-2 group-hover:text-white">About Us</a>
-          </li>
-          <li class="block text-md text-grey-main group">
-            <a href="" class="py-2 group-hover:text-white">Contact Us</a>
-          </li>
+          <li class="block mr-3 md:mr-5 text-md text-grey-main group">
+              <router-link to="/home" class="py-2 group-hover:text-white">Home</router-link>
+            </li>
+            <li class="block mr-3 md:mr-5 text-md text-grey-main group">
+              <router-link to="/about" class="py-2 group-hover:text-white">Product</router-link>
+            </li>
+            <li class="block mr-3 md:mr-5 text-md text-grey-main group">
+              <router-link to="" class="py-2 group-hover:text-white">About Us</router-link>
+            </li>
+            <li class="block mr-3 md:mr-5 text-md text-grey-main group">
+              <router-link to="" class="py-2 group-hover:text-white">Contact Us</router-link>
+            </li>
         </ul>
       </div>
       <div class="social-media">

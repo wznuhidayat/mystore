@@ -7,6 +7,7 @@
 // const { default: VueRouter } = require('vue-router');
 require('./bootstrap');
 window.Vue = require('vue').default;
+import axios from 'axios';
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 Vue.config.ignoredElements = [/^ion-/];
@@ -33,14 +34,59 @@ Vue.component('footer-component', require('./components/FooterComponent.vue').de
  */
 const Home = require('./pages/Home.vue').default
 const ProductDetail = require('./pages/ProductDetail.vue').default
+const Login = require('./pages/Login.vue').default
+const Register = require('./pages/Register.vue').default
+const Cart = require('./pages/Cart.vue').default
 const routes = [{
   path: '/home',
-  component: Home
+  component: Home,
+  name: 'home'
 },
 {
   path: '/about',
   component: ProductDetail
-}]
+},
+{
+  path: '/products/:id',
+  component: ProductDetail
+},
+{
+  path: '/login',
+  component: Login,
+  name: 'login',
+  beforeEnter: (to,form,next)=>{
+    axios.get('/auth/authenticated').then(()=>{
+      return next({name: 'cart'})
+    }).catch(()=>{
+      next()
+    })
+  }
+},
+{
+  path: '/register',
+  component: Register,
+  name: 'register',
+  beforeEnter: (to,form,next)=>{
+    axios.get('/auth/authenticated').then(()=>{
+      return next({name: 'cart'})
+    }).catch(()=>{
+      next()
+    })
+  }
+},
+{
+  path: '/cart',
+  component: Cart,
+  name: 'cart',
+  beforeEnter: (to,form,next)=>{
+    axios.get('/auth/authenticated').then(()=>{
+      next()
+    }).catch(()=>{
+      return next({name: 'login'})
+    })
+  }
+}
+]
 const router = new VueRouter({
   mode: 'history',
   routes
