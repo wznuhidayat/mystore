@@ -16,8 +16,9 @@ class Product extends Migration
         Schema::create('product', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->float('price');
-            $table->string('category');
+            $table->double('price');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('product_category')->onDelete('cascade')->onUpdate('cascade');
             $table->text('description');
             $table->text('image');
         });

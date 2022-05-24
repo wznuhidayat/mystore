@@ -34,4 +34,4 @@ Route::middleware('auth:sanctum')->get('/auth/user',function(Request $request){
 Route::middleware('auth:sanctum')->get('/auth/authenticated',function(){
     return true;
 });
-
+Route::get('/api/products', [Main::class, 'products']);
