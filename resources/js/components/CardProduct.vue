@@ -48,7 +48,7 @@
         <h3 class="align-bottom text-xs font-bold">$ {{ product.price }}</h3>
         <div class="">
           <h3 class="align-top text-xs text-gray-500 inline">
-            {{ product.rating.rate }} | {{ product.rating.count }} sold
+            {{ product.ratings.rate }} | {{ product.ratings.count }} sold
           </h3>
           <ion-icon
             name="star-outline"

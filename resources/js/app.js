@@ -9,7 +9,11 @@ require('./bootstrap');
 window.Vue = require('vue').default;
 import axios from 'axios';
 import VueRouter from 'vue-router';
+import InfiniteLoading from 'vue-infinite-loading';
+import VueResource from 'vue-resource';
 Vue.use(VueRouter);
+Vue.use(InfiniteLoading);
+Vue.use(VueResource);
 Vue.config.ignoredElements = [/^ion-/];
 /**
  * The following block of code may be used to automatically register your
@@ -21,7 +25,7 @@ Vue.config.ignoredElements = [/^ion-/];
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
+Vue.component('InfiniteLoading', require('vue-infinite-loading'));
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('navbar-component', require('./components/NavbarComponent.vue').default);
 Vue.component('card-product', require('./components/CardProduct.vue').default);

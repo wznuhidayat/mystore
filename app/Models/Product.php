@@ -17,4 +17,8 @@ class Product extends Model
         'description',
         'image'
     ];
+    public function ratings()
+    {
+        return $this->hasOne(RatingProduct::class);
+    }
 }

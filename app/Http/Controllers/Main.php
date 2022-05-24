@@ -13,7 +13,7 @@ class Main extends Controller
     }
     public function products()
     {
-        $data = Product::orderBy('id')->paginate(10);
+        $data = Product::with(['ratings'])->orderBy('id')->paginate(10);
         // dd($data);
         return response()->json($data);
     }

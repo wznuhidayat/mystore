@@ -28,7 +28,9 @@
                   rounded-lg
                   px-4
                   py-1
-                  hover:bg-sec-primary ease-in-out duration-300
+                  hover:bg-sec-primary
+                  ease-in-out
+                  duration-300
                 "
               >
                 View
@@ -59,7 +61,9 @@
                   rounded-lg
                   px-4
                   py-1
-                  hover:bg-sec-primary ease-in-out duration-300
+                  hover:bg-sec-primary
+                  ease-in-out
+                  duration-300
                 "
               >
                 View
@@ -89,7 +93,9 @@
                   rounded-lg
                   px-4
                   py-1
-                  hover:bg-sec-primary ease-in-out duration-300
+                  hover:bg-sec-primary
+                  ease-in-out
+                  duration-300
                 "
               >
                 View
@@ -120,7 +126,9 @@
                   rounded-lg
                   px-4
                   py-1
-                  hover:bg-sec-primary ease-in-out duration-300
+                  hover:bg-sec-primary
+                  ease-in-out
+                  duration-300
                 "
               >
                 View
@@ -145,7 +153,8 @@
             md:h-36
             items-center
             hover:border hover:rounded-lg hover:shadow-md
-            ease-in-out duration-300
+            ease-in-out
+            duration-300
           "
         >
           <img :src="'css/icon/shirts.png'" alt="" class="w-12 md:w-20" />
@@ -163,7 +172,8 @@
             md:h-36
             items-center
             hover:border hover:rounded-lg hover:shadow-md
-            ease-in-out duration-300
+            ease-in-out
+            duration-300
           "
         >
           <img :src="'css/icon/dress.png'" alt="" class="w-12 md:w-20" />
@@ -181,7 +191,8 @@
             md:h-36
             items-center
             hover:border hover:rounded-lg hover:shadow-md
-            ease-in-out duration-300
+            ease-in-out
+            duration-300
           "
         >
           <img :src="'css/icon/rings.png'" alt="" class="w-12 md:w-20" />
@@ -197,7 +208,8 @@
             md:h-36
             items-center
             hover:border hover:rounded-lg hover:shadow-md
-            ease-in-out duration-300
+            ease-in-out
+            duration-300
           "
         >
           <img
@@ -219,7 +231,8 @@
             md:h-36
             items-center
             hover:border hover:rounded-lg hover:shadow-md
-            ease-in-out duration-300
+            ease-in-out
+            duration-300
           "
         >
           <img
@@ -241,7 +254,8 @@
             md:h-36
             items-center
             hover:border hover:rounded-lg hover:shadow-md
-            ease-in-out duration-300
+            ease-in-out
+            duration-300
           "
         >
           <img
@@ -260,6 +274,26 @@
         <h2 class="text-lg font-bold">Product</h2>
       </div>
       <div class="flex flex-wrap gap-5 mx-auto">
+        <!-- <div
+          class="
+            rounded-lg
+            overflow-hidden
+            shadow-md
+            w-5/12
+            md:w-3/12
+            lg:w-2/12
+            border
+            group
+            hover:-translate-y-2
+            transition
+            duration-300
+          "
+          v-if="index < products.length"
+          v-for="(productIndex, index) in productsShow"
+        >
+          <card-product :product="products[index]"></card-product>
+        </div> -->
+
         <div
           class="
             rounded-lg
@@ -274,14 +308,41 @@
             transition
             duration-300
           "
-          v-if="index < products.length" v-for="(productIndex, index) in productsShow"
+          
+         v-for="product in products" :key="product.id"
         >
-          <card-product :product="products[index]"></card-product>
+          <card-product :product="product"></card-product>
         </div>
+       
       </div>
-      <div class="load-more flex justify-center mt-4 " v-if="productsShow < products.length || products.length > productsShow">
-        <button class="py-2 px-4 rounded-lg border shadow-sm hover:bg-sec-primary ease-in-out duration-300" @click="productsShow += 5">Load more <ion-icon name="caret-down-circle-outline" class="align-middle"></ion-icon></button>
-      </div>
+       <infinite-loading
+        @distance="1"
+        @infinite="handleLoadMore"
+      ></infinite-loading>
+      <!-- <div
+        class="load-more flex justify-center mt-4"
+        v-if="productsShow < products.length || products.length > productsShow"
+      >
+        <button
+          class="
+            py-2
+            px-4
+            rounded-lg
+            border
+            shadow-sm
+            hover:bg-sec-primary
+            ease-in-out
+            duration-300
+          "
+          @click="productsShow += 5"
+        >
+          Load more
+          <ion-icon
+            name="caret-down-circle-outline"
+            class="align-middle"
+          ></ion-icon>
+        </button>
+      </div> -->
     </div>
   </section>
 </template>
@@ -294,8 +355,9 @@ export default {
   data() {
     return {
       products: [],
+      page: 1,
       productsShow: 10,
-      totalProducts: 0
+      totalProducts: 0,
     };
   },
   components: {
@@ -306,17 +368,32 @@ export default {
     setProduct(data) {
       this.products = data;
     },
+    handleLoadMore($state) {
+      this.$http
+        .get("http://127.0.0.1:8000/api/products?page=" + this.page)
+        .then((res) => {
+          return res.json();
+        })
+        .then((res) => {
+          $.each(res.data, (key, value) => {
+            this.products.push(value);
+          });
+          $state.loaded();
+        });
+
+      this.page = this.page + 1;
+    },
   },
   mounted() {
-    axios
-      .get("http://localhost:3000/product")
-      .then((response) => {
-        this.setProduct(response.data);
-        this.totalProducts = response.data.length;
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    // axios
+    //   .get("http://localhost:3000/product")
+    //   .then((response) => {
+    //     this.setProduct(response.data);
+    //     this.totalProducts = response.data.length;
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
 
     var owl = $(".owl-carousel");
     owl.owlCarousel({
