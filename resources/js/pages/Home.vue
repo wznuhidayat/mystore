@@ -385,15 +385,7 @@ export default {
     },
   },
   mounted() {
-    // axios
-    //   .get("http://localhost:3000/product")
-    //   .then((response) => {
-    //     this.setProduct(response.data);
-    //     this.totalProducts = response.data.length;
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+    
 
     var owl = $(".owl-carousel");
     owl.owlCarousel({

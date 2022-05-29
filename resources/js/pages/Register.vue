@@ -291,9 +291,16 @@ export default {
     }
   },
   methods: {
+    // saveForm(){
+    //   axios.post('/auth/register', this.form).then(()=>{
+    //     this.$router.push({ name: "cart" });
+    //   }).catch((error) => {
+    //     this.error = error.response.data.errors;
+    //   })
+    // },
     saveForm(){
-      axios.post('/auth/register', this.form).then(()=>{
-        console.log('saved');
+      this.$store.dispatch('register', this.form).then(()=>{
+        this.$router.push({ name: "cart" });
       }).catch((error) => {
         this.error = error.response.data.errors;
       })

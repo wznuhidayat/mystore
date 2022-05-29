@@ -11,6 +11,7 @@ import axios from 'axios';
 import VueRouter from 'vue-router';
 import InfiniteLoading from 'vue-infinite-loading';
 import VueResource from 'vue-resource';
+import store from './store/index';
 Vue.use(VueRouter);
 Vue.use(InfiniteLoading);
 Vue.use(VueResource);
@@ -95,26 +96,16 @@ const router = new VueRouter({
   mode: 'history',
   routes
 })
-const app = new Vue({
-  el: '#app',
-  // data() {
-  //   return {
-  //     products: []
-  //   }
-  // },
-  router,
-  // methods: {
-  //   setProduct(data) {
-  //     this.products = data;
-  //   }
-  // },
-  // mounted() {
-  //   axios.get('http://localhost:3000/product')
-  //     .then((response) => {
-  //       this.setProduct(response.data)
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // }
-});
+
+
+
+
+// .then(() => {
+  const app = new Vue({
+    el: '#app',
+    router,
+    store
+  });
+// }).catch((error) => {
+//   console.error(error);
+// })

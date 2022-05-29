@@ -3,7 +3,7 @@
     <div class="h-full py-3 px-8 container">
       <div class="flex justify-between mb-8">
         <div class="text-grey-main text-2xl font-bold">My Store</div>
-        <div class="text-grey-main text-md hover:bg-cyan-800 px-2 dropdown inline-block relative group ">
+        <div class="text-grey-main text-md hover:bg-cyan-800 px-2 dropdown inline-block relative group " v-if="isLoggedIn">
           <div class="">
             <h3 class="hidden lg:inline-block">{{username}}</h3>
               <img
@@ -16,7 +16,7 @@
             <li class="py-2 px-4 rounded-t bg-gray-100 hover:bg-gray-200 block"><ion-icon name="person-outline" class="align-middle mr-3"></ion-icon><a class="static" href="#">Profile</a></li>
             <li class="py-2 px-4 rounded-t bg-gray-100 hover:bg-gray-200 block"><ion-icon name="cart-outline" class="align-middle mr-3"></ion-icon><a class="static" href="#">Cart</a></li>
             <li class="py-2 px-4 rounded-t bg-gray-100 hover:bg-gray-200 block"><ion-icon name="heart-outline" class="align-middle mr-3"></ion-icon><a class="static" href="#">Wishlist</a></li>
-            <li class="py-2 px-4 rounded-t bg-gray-100 hover:bg-gray-200 block"><ion-icon name="log-out-outline" class="align-middle mr-3"></ion-icon><a class="static" @click.prevent="$emit('logout')">Logout</a></li>
+            <li class="py-2 px-4 rounded-t bg-gray-100 hover:bg-gray-200 block"><ion-icon name="log-out-outline" class="align-middle mr-3"></ion-icon><a class="static" @click.prevent="logout">Logout</a></li>
           </ul>
         </div>
         
@@ -25,9 +25,24 @@
   </nav>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
+  
   name: "MiniNavbarComponent",
-  props: ["username","image"]
+  props: ["username","image"],
+  methods: {
+    logout() {
+      this.$store.dispatch('logout').then(()=>{
+        this.$router.push({ name: "login" });
+      })
+    }
+  },
+  computed: {
+      ...mapGetters({ 
+        isLoggedIn: 'isLoggedIn',
+        user: 'user',
+      })
+  },
   
 }
 </script>

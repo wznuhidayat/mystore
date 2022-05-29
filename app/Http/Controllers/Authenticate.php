@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Auth\Events\Registered;
 
 class Authenticate extends Controller
 {
@@ -32,11 +33,15 @@ class Authenticate extends Controller
             'password' => ['required','min:8']
         ]);
 
-        User::create([
+        $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+        event(new Registered($user));
+
+        Auth::login($user);
+        return response()->json(Auth::user(),200);
     }
     public function logout()
     {

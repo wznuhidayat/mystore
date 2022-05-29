@@ -231,8 +231,7 @@ export default {
   },
   methods: {
     loginUser() {
-      axios
-        .post("/auth/login", this.form)
+      this.$store.dispatch("login", this.form)
         .then(() => {
           this.$router.push({ name: "cart" });
         })

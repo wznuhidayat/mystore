@@ -1,6 +1,6 @@
 <template>
   <section>
-    <mini-navbar :username="user.username" image="no-image.png" @logout="logout()"></mini-navbar>
+    <mini-navbar :username="user.username" image="no-image.png" @logout="logout()" ></mini-navbar>
 
     <div class="container px-8 mt-5 grid grid-cols-3 gap-4">
       <div class="col-span-3 md:col-span-2">
@@ -200,6 +200,7 @@
 <script>
 import axios from 'axios';
 import MiniNavbar from "../components/MiniNavbarComponent.vue";
+import { mapGetters } from 'vuex'
 export default {
   name: "Cart",
   components: {
@@ -209,7 +210,6 @@ export default {
     return {
       qty: 1,
       product: [],
-      user: []
     };
   },
   methods: {
@@ -221,17 +221,16 @@ export default {
         this.qty = this.qty - 1;
       }
     },
-    logout() {
-      axios.post('/auth/logout').then(()=>{
-         this.$router.push({ name: "login" });
-      })
-    },
+  
   },
   mounted() {
-    axios.get('auth/user').then((response) => {
-      this.user = response.data
-      // console.log(this.user);
-    })
+    this.$store.dispatch('getUser')
+  },
+  computed: {
+      ...mapGetters({ 
+        isLoggedIn: 'isLoggedIn',
+        user: 'user',
+      })
   },
 };
 </script>
