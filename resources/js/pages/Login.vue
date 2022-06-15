@@ -22,21 +22,74 @@
         ></div>
         <div class="px-3 py-4">
           <div class="flex-col flex ml-auto mr-auto items-center w-full">
-            <h1 class="text-2xl md:my-8">Login</h1>
+            <h1 class="text-2xl md:my-8 mb-1">Login</h1>
+            <div
+              id="alert-2"
+              v-if="loginAlert"
+              class="
+                flex
+                p-3
+                w-10/12
+                mb-1
+                mt-1
+                bg-red-100
+                rounded-lg
+                dark:bg-red-200
+              "
+              role="alert"
+            >
+              <ion-icon
+                name="alert-circle-outline"
+                class="text-red-700 w-5 h-5"
+              ></ion-icon>
+              <div
+                class="ml-3 text-sm font-medium text-red-700 dark:text-red-800"
+              >
+                <p
+                  class="font-light hover:text-red-800 dark:hover:text-red-900"
+                >
+                  Login error
+                </p>
+              </div>
+              <button
+                type="button"
+                class="
+                  ml-auto
+                  -mx-1.5
+                  -my-1.5
+                  bg-red-100
+                  text-red-500
+                  rounded-lg
+                  focus:ring-2 focus:ring-red-400
+                  p-1.5
+                  hover:bg-red-200
+                  inline-flex
+                  h-8
+                  w-8
+                  dark:bg-red-200 dark:text-red-600 dark:hover:bg-red-300
+                "
+                data-dismiss-target="#alert-2"
+                aria-label="Close"
+                @click="hiddenAlert()"
+              >
+                <span class="sr-only">Close</span>
+                <ion-icon
+                  name="close-circle-outline"
+                  class="w-5 h-5"
+                ></ion-icon>
+              </button>
+            </div>
             <form action="" class="mt-2 flex flex-col w-10/12">
               <div
                 class="
                   flex flex-wrap
                   items-stretch
                   w-full
-                  mb-4
                   relative
                   h-full
                   bg-white
                   shadow-sm
-                  items-center
                   rounded-lg
-                  mb-6
                   pr-10
                 "
               >
@@ -62,7 +115,6 @@
                     flex-shrink flex-grow flex-auto
                     leading-normal
                     w-px
-                    flex-1
                     border-0
                     h-10
                     border-grey-light
@@ -77,6 +129,20 @@
                   placeholder="Email"
                 />
               </div>
+              <span
+                class="
+                  flex
+                  items-center
+                  font-light
+                  tracking-wide
+                  text-red-500 text-xs
+                  mt-1
+                  ml-3
+                "
+                v-if="errors.email"
+              >
+                {{ errors.email[0] }}
+              </span>
               <div
                 class="
                   flex flex-wrap
@@ -84,11 +150,10 @@
                   w-full
                   relative
                   h-full
+                  mt-4
                   bg-white
                   shadow-sm
-                  items-center
                   rounded-lg
-                  mb-4
                 "
               >
                 <div class="flex -mr-px justify-center w-10 p-3">
@@ -115,7 +180,6 @@
                     flex-shrink flex-grow flex-auto
                     leading-normal
                     w-px
-                    flex-1
                     border-0
                     h-10
                     rounded rounded-l-none
@@ -135,7 +199,6 @@
                     flex-shrink flex-grow flex-auto
                     leading-normal
                     w-px
-                    flex-1
                     border-0
                     h-10
                     rounded rounded-l-none
@@ -167,9 +230,23 @@
                   </span>
                 </div>
               </div>
+              <span
+                class="
+                  flex
+                  items-center
+                  font-light
+                  tracking-wide
+                  text-red-500 text-xs
+                  mt-1
+                  ml-3
+                "
+                v-if="errors.password"
+              >
+                {{ errors.password[0] }}
+              </span>
               <a
                 href="#"
-                class="text-base text-right leading-normal hover:underline mb-3"
+                class="text-base text-right leading-normal hover:underline mb-3 mt-3"
                 >Forget Password ?</a
               >
               <button
@@ -194,7 +271,12 @@
               </button>
               <router-link
                 to="/register"
-                class="text-base text-center leading-normal hover:underline mt-3"
+                class="
+                  text-base text-center
+                  leading-normal
+                  hover:underline
+                  mt-3
+                "
               >
                 Don't have an account ?</router-link
               >
@@ -219,7 +301,8 @@ export default {
         email: "",
         password: "",
       },
-      error: [],
+      loginAlert: false,
+      errors: [],
       showPassword: false,
       password: null,
     };
@@ -231,16 +314,26 @@ export default {
   },
   methods: {
     loginUser() {
-      this.$store.dispatch("login", this.form)
+      this.$store
+        .dispatch("login", this.form)
         .then(() => {
           this.$router.push({ name: "cart" });
         })
         .catch((error) => {
-          this.error = error.response.data.errors;
+          var errorLength = Object.keys(error.response.data.errors).length
+          if(errorLength > 1){
+              this.errors = error.response.data.errors;
+          }else{
+              this.loginAlert = true;
+          }
+         
         });
     },
     toggleShow() {
       this.showPassword = !this.showPassword;
+    },
+    hiddenAlert() {
+      this.loginAlert = false;
     },
   },
   mounted() {},

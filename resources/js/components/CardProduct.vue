@@ -32,7 +32,7 @@
               size="large"
             ></ion-icon>
           </button>
-          <button>
+            <button type="submit" @click.prevent="addToCart(product.id,userId)">
             <ion-icon
               name="cart-outline"
               class="text-grey-main hover:text-sec-primary"
@@ -61,10 +61,32 @@
   <!-- </div> -->
 </template>
 <script>
+import { mapGetters } from 'vuex'
 // console.log(product);
 export default {
   name: "CartProduct",
-  props: ["product"],
+  props: ["product","userId"],
+  data(){
+    return {
+      form: {
+        product_id: '',
+        user_id: '',
+      },
+      errors: [],
+    }
+  },
+  methods: {
+    addToCart(productid,userid){
+      this.form.product_id = productid
+      this.form.user_id = userid
+      this.$store.dispatch('addToCart', this.form).then(()=>{
+        // this.$router.push({ name: "cart" });
+      }).catch((error) => {
+        this.$router.push({ name: "login" });
+        this.errors = error.response.data.errors;
+      })
+    },
+  }
 };
 </script>
 <style >

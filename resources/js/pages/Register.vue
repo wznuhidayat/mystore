@@ -33,19 +33,18 @@
           >
             <h1 class="text-2xl my-2">Register</h1>
             <form action="" class="mt-2 flex flex-col w-10/12">
+            
               <div
                 class="
                   flex flex-wrap
                   items-stretch
                   w-full
-                  mb-4
                   relative
                   h-full
                   bg-white
                   shadow-sm
-                  items-center
                   rounded-lg
-                  mb-6
+                  
                   pr-10
                 "
               >
@@ -71,7 +70,6 @@
                     flex-shrink flex-grow flex-auto
                     leading-normal
                     w-px
-                    flex-1
                     border-0
                     h-10
                     border-grey-light
@@ -85,20 +83,22 @@
                   v-model="form.username"
                   placeholder="Username"
                 />
+               
               </div>
+               <span class="flex items-center font-light tracking-wide text-red-500 text-xs mt-1 ml-3" v-if="errors.username">
+			{{errors.username[0]}}
+		</span>
               <div
                 class="
                   flex flex-wrap
                   items-stretch
                   w-full
-                  mb-4
                   relative
                   h-full
                   bg-white
                   shadow-sm
-                  items-center
                   rounded-lg
-                  mb-6
+                  mt-2
                   pr-10
                 "
               >
@@ -124,7 +124,6 @@
                     flex-shrink flex-grow flex-auto
                     leading-normal
                     w-px
-                    flex-1
                     border-0
                     h-10
                     border-grey-light
@@ -139,6 +138,9 @@
                   placeholder="Email"
                 />
               </div>
+              <span class="flex items-center font-light tracking-wide text-red-500 text-xs mt-1 ml-3" v-if="errors.email">
+			{{errors.email[0]}}
+		</span>
               <div
                 class="
                   flex flex-wrap
@@ -148,9 +150,8 @@
                   h-full
                   bg-white
                   shadow-sm
-                  items-center
                   rounded-lg
-                  mb-4
+                  mt-2
                 "
               >
                 <div class="flex -mr-px justify-center w-10 p-3">
@@ -177,7 +178,6 @@
                     flex-shrink flex-grow flex-auto
                     leading-normal
                     w-px
-                    flex-1
                     border-0
                     h-10
                     rounded rounded-l-none
@@ -197,7 +197,6 @@
                     flex-shrink flex-grow flex-auto
                     leading-normal
                     w-px
-                    flex-1
                     border-0
                     h-10
                     rounded rounded-l-none
@@ -229,6 +228,9 @@
                   </span>
                 </div>
               </div>
+               <span class="flex items-center font-light tracking-wide text-red-500 text-xs mt-1 ml-3" v-if="errors.password">
+			{{ errors.password[0] }}
+		</span>
               <router-link
                 to="/login"
                 class="
@@ -236,6 +238,7 @@
                   leading-normal
                   hover:underline
                   mb-3
+                  mt-3
                 "
                 >Already an account ?</router-link
               >
@@ -280,7 +283,7 @@ export default {
         email: '',
         password: ''
       },
-      error: [],
+      errors: [],
       showPassword: false,
       password: null
     };
@@ -302,7 +305,7 @@ export default {
       this.$store.dispatch('register', this.form).then(()=>{
         this.$router.push({ name: "cart" });
       }).catch((error) => {
-        this.error = error.response.data.errors;
+        this.errors = error.response.data.errors;
       })
     },
     toggleShow() {

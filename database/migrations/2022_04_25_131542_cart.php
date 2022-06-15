@@ -15,6 +15,7 @@ class Cart extends Migration
     {
         Schema::create('cart', function (Blueprint $table) {
             $table->id();
+            $table->enum('status_cart', ['cart','checkout']);
             $table->bigInteger('date');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');

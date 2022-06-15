@@ -9,11 +9,11 @@ require('./bootstrap');
 window.Vue = require('vue').default;
 import axios from 'axios';
 import VueRouter from 'vue-router';
-import InfiniteLoading from 'vue-infinite-loading';
+// import InfiniteLoading from 'vue-infinite-loading';
 import VueResource from 'vue-resource';
 import store from './store/index';
 Vue.use(VueRouter);
-Vue.use(InfiniteLoading);
+// Vue.use(InfiniteLoading);
 Vue.use(VueResource);
 Vue.config.ignoredElements = [/^ion-/];
 /**
@@ -30,6 +30,7 @@ Vue.component('InfiniteLoading', require('vue-infinite-loading'));
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('navbar-component', require('./components/NavbarComponent.vue').default);
 Vue.component('card-product', require('./components/CardProduct.vue').default);
+Vue.component('list-cart', require('./components/ListCartComponent.vue').default);
 Vue.component('footer-component', require('./components/FooterComponent.vue').default);
 
 /**
@@ -104,7 +105,8 @@ const router = new VueRouter({
   const app = new Vue({
     el: '#app',
     router,
-    store
+    store,
+    
   });
 // }).catch((error) => {
 //   console.error(error);

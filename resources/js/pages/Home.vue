@@ -2,7 +2,7 @@
 </style>
 <template>
   <section>
-    <navbar-component image="no-image.png"></navbar-component>
+    <navbar-component :username="user.username" :image="user.image" :countcart="this.productInCart.length"></navbar-component>
     <div class="carouserl-wrap">
       <div class="owl-carousel owl-theme">
         <div
@@ -269,30 +269,13 @@
         </div>
       </div>
     </div>
+    
     <div class="container px-8 mx-auto mt-4">
       <div class="head-product mb-4">
         <h2 class="text-lg font-bold">Product</h2>
       </div>
       <div class="flex flex-wrap gap-5 mx-auto">
-        <!-- <div
-          class="
-            rounded-lg
-            overflow-hidden
-            shadow-md
-            w-5/12
-            md:w-3/12
-            lg:w-2/12
-            border
-            group
-            hover:-translate-y-2
-            transition
-            duration-300
-          "
-          v-if="index < products.length"
-          v-for="(productIndex, index) in productsShow"
-        >
-          <card-product :product="products[index]"></card-product>
-        </div> -->
+        
 
         <div
           class="
@@ -311,7 +294,7 @@
           
          v-for="product in products" :key="product.id"
         >
-          <card-product :product="product"></card-product>
+          <card-product :product="product" :userId="user.id"></card-product>
         </div>
        
       </div>
@@ -349,15 +332,13 @@
 <script>
 import NavbarComponent from "../components/NavbarComponent.vue";
 import CardProduct from "../components/CardProduct.vue";
-import axios from "axios";
+import { mapGetters  } from 'vuex';
 export default {
   name: "Home",
   data() {
     return {
       products: [],
       page: 1,
-      productsShow: 10,
-      totalProducts: 0,
     };
   },
   components: {
@@ -368,6 +349,14 @@ export default {
     setProduct(data) {
       this.products = data;
     },
+    // testcart(){
+    //   this.$store.dispatch('testgetCart').then(()=>{
+    //     // this.$router.push({ name: "cart" });
+    //   }).catch((error) => {
+    //     this.$router.push({ name: "login" });
+    //     this.errors = error.response.data.errors;
+    //   })
+    // },
     handleLoadMore($state) {
       this.$http
         .get("http://127.0.0.1:8000/api/products?page=" + this.page)
@@ -385,8 +374,10 @@ export default {
     },
   },
   mounted() {
-    
-
+    //get user login
+    this.$store.dispatch('getUser') 
+    // this.$store.dispatch('getCart') 
+    // console.log(this.user.username)
     var owl = $(".owl-carousel");
     owl.owlCarousel({
       items: 1,
@@ -402,6 +393,13 @@ export default {
       // navText:["<div class='nav-btn prev-slide'></div>","<div class='nav-btn next-slide'></div>"],
     });
     $(".owl-nav").addClass("container mx-auto");
+  },
+  computed: {
+      ...mapGetters({ 
+        isLoggedIn: 'isLoggedIn',
+        user: 'user',
+        productInCart: 'getCart',
+      })
   },
 };
 </script>
